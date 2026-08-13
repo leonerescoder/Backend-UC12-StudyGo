@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Backend-UC12-StudyGo")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+307c0017121713c5a499d6ff6e5385caef0b4f57")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+bb4951e0b04500737f9acf939677dc6873290626")]
 [assembly: System.Reflection.AssemblyProductAttribute("Backend-UC12-StudyGo")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Backend-UC12-StudyGo")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
