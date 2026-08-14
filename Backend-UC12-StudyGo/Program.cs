@@ -7,13 +7,42 @@ class Program
     {
         while (true)
         {
+            Console.WriteLine("\n--- MENU PRINCIPAL ---");
+            Console.WriteLine("1. Gerenciar Cursos");
+            Console.WriteLine("2. Gerenciar Categorias");
+            Console.WriteLine("0. Sair");
+            Console.Write("Escolha uma opção: ");
+            
+            var option = Console.ReadLine();
+
+            if (option == "0") break;
+
+            switch (option)
+            {
+                case "1":
+                    await MenuCourse();
+                    break;
+                case "2":
+                    await MenuCategory();
+                    break;
+                default:
+                    Console.WriteLine("Opção inválida!");
+                    break;
+            }
+        }
+    }
+
+    static async Task MenuCourse()
+    {
+        while (true)
+        {
             Console.WriteLine("\n--- MENU COURSE ---");
             Console.WriteLine("1. Inserir");
             Console.WriteLine("2. Consultar todos");
             Console.WriteLine("3. Consultar específico");
             Console.WriteLine("4. Alterar");
             Console.WriteLine("5. Remover");
-            Console.WriteLine("0. Sair");
+            Console.WriteLine("0. Voltar");
             Console.Write("Escolha uma opção: ");
             
             var option = Console.ReadLine();
@@ -51,6 +80,55 @@ class Program
         }
     }
 
+    static async Task MenuCategory()
+    {
+        while (true)
+        {
+            Console.WriteLine("\n--- MENU CATEGORY ---");
+            Console.WriteLine("1. Inserir");
+            Console.WriteLine("2. Consultar todos");
+            Console.WriteLine("3. Consultar específico");
+            Console.WriteLine("4. Alterar");
+            Console.WriteLine("5. Remover");
+            Console.WriteLine("0. Voltar");
+            Console.Write("Escolha uma opção: ");
+            
+            var option = Console.ReadLine();
+
+            if (option == "0") break;
+
+            try
+            {
+                switch (option)
+                {
+                    case "1":
+                        await InserirCategoria();
+                        break;
+                    case "2":
+                        await ConsultarTodasCategorias();
+                        break;
+                    case "3":
+                        await ConsultarCategoriaEspecifica();
+                        break;
+                    case "4":
+                        await AlterarCategoria();
+                        break;
+                    case "5":
+                        await RemoverCategoria();
+                        break;
+                    default:
+                        Console.WriteLine("Opção inválida!");
+                        break;
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Erro: {ex.Message}");
+            }
+        }
+    }
+
+    // --- Métodos Course ---
     static async Task Inserir()
     {
         Console.Write("Nome: ");
@@ -132,5 +210,73 @@ class Program
         c.id = id;
         await c.RemoverAsync();
         Console.WriteLine("Curso removido com sucesso!");
+    }
+
+    // --- Métodos Category ---
+    static async Task InserirCategoria()
+    {
+        Console.Write("Nome: ");
+        string name = Console.ReadLine();
+        Console.Write("Descrição: ");
+        string desc = Console.ReadLine();
+        
+        Category c = new Category(name, desc);
+        await c.InserirAsync();
+        Console.WriteLine("Categoria inserida com sucesso!");
+    }
+
+    static async Task ConsultarTodasCategorias()
+    {
+        Category cAux = new Category();
+        var categorias = await cAux.BuscarTodosAsync();
+        cAux.Mostrar(categorias);
+    }
+
+    static async Task ConsultarCategoriaEspecifica()
+    {
+        Console.Write("ID da Categoria: ");
+        int id = int.Parse(Console.ReadLine());
+        Category c = new Category();
+        await c.BuscaAsync(id);
+        if (c.id != 0)
+            c.Mostrar();
+        else
+            Console.WriteLine("Categoria não encontrada.");
+    }
+
+    static async Task AlterarCategoria()
+    {
+        Console.Write("ID da Categoria a alterar: ");
+        int id = int.Parse(Console.ReadLine());
+        Category c = new Category();
+        await c.BuscaAsync(id);
+        if (c.id == 0)
+        {
+            Console.WriteLine("Categoria não encontrada.");
+            return;
+        }
+
+        Console.WriteLine($"Nome atual: {c.name}");
+        Console.Write("Novo Nome (ou enter para manter): ");
+        string name = Console.ReadLine();
+        if (!string.IsNullOrEmpty(name)) c.name = name;
+
+        Console.WriteLine($"Descrição atual: {c.description}");
+        Console.Write("Nova Descrição (ou enter para manter): ");
+        string desc = Console.ReadLine();
+        if (!string.IsNullOrEmpty(desc)) c.description = desc;
+
+        await c.AtualizarAsync();
+        Console.WriteLine("Categoria alterada com sucesso!");
+    }
+
+    static async Task RemoverCategoria()
+    {
+        Console.Write("ID da Categoria a remover: ");
+        int id = int.Parse(Console.ReadLine());
+        Category c = new Category();
+        c.id = id;
+        await c.RemoverAsync();
+        Console.WriteLine("Categoria removida com sucesso!");
     }
 }
