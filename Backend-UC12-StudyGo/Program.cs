@@ -10,6 +10,7 @@ class Program
             Console.WriteLine("\n--- MENU PRINCIPAL ---");
             Console.WriteLine("1. Gerenciar Cursos");
             Console.WriteLine("2. Gerenciar Categorias");
+            Console.WriteLine("3. Gerenciar Empresas");
             Console.WriteLine("0. Sair");
             Console.Write("Escolha uma opção: ");
             
@@ -24,6 +25,9 @@ class Program
                     break;
                 case "2":
                     await MenuCategory();
+                    break;
+                case "3":
+                    await MenuCompany();
                     break;
                 default:
                     Console.WriteLine("Opção inválida!");
@@ -278,5 +282,134 @@ class Program
         c.id = id;
         await c.RemoverAsync();
         Console.WriteLine("Categoria removida com sucesso!");
+    }
+
+    // --- Métodos Company ---
+    static async Task MenuCompany()
+    {
+        while (true)
+        {
+            Console.WriteLine("\n--- MENU COMPANY ---");
+            Console.WriteLine("1. Inserir");
+            Console.WriteLine("2. Consultar todas");
+            Console.WriteLine("3. Consultar específica");
+            Console.WriteLine("4. Alterar");
+            Console.WriteLine("5. Remover");
+            Console.WriteLine("0. Voltar");
+            Console.Write("Escolha uma opção: ");
+            
+            var option = Console.ReadLine();
+
+            if (option == "0") break;
+
+            try
+            {
+                switch (option)
+                {
+                    case "1":
+                        await InserirCompany();
+                        break;
+                    case "2":
+                        await ConsultarTodasCompanies();
+                        break;
+                    case "3":
+                        await ConsultarCompanyEspecifica();
+                        break;
+                    case "4":
+                        await AlterarCompany();
+                        break;
+                    case "5":
+                        await RemoverCompany();
+                        break;
+                    default:
+                        Console.WriteLine("Opção inválida!");
+                        break;
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Erro: {ex.Message}");
+            }
+        }
+    }
+
+    static async Task InserirCompany()
+    {
+        Console.Write("Nome: ");
+        string name = Console.ReadLine();
+        Console.Write("CNPJ: ");
+        string cnpj = Console.ReadLine();
+        Console.Write("Data de Fundação (yyyy-mm-dd): ");
+        DateTime foundation = DateTime.Parse(Console.ReadLine());
+        Console.Write("Lugares (Places): ");
+        string places = Console.ReadLine();
+        Console.Write("Fundamentos: ");
+        string fundaments = Console.ReadLine();
+        Console.Write("Métodos: ");
+        string methods = Console.ReadLine();
+        Console.Write("Ranking (inteiro): ");
+        int ranking = int.Parse(Console.ReadLine());
+
+        Console.Write("ID Dono (vazio para null): ");
+        string ownerStr = Console.ReadLine();
+        User owner = string.IsNullOrEmpty(ownerStr) ? null : new User(int.Parse(ownerStr));
+
+        Company c = new Company(name, cnpj, foundation, places, fundaments, methods, ranking, owner);
+        await c.InserirAsync();
+        Console.WriteLine("Empresa inserida com sucesso!");
+    }
+
+    static async Task ConsultarTodasCompanies()
+    {
+        var companies = await Company.BuscarTodosAsync();
+        Company.Mostrar(companies);
+    }
+
+    static async Task ConsultarCompanyEspecifica()
+    {
+        Console.Write("ID da Empresa: ");
+        int id = int.Parse(Console.ReadLine());
+        Company c = new Company();
+        await c.BuscaAsync(id);
+        if (c.id != 0)
+            c.Mostrar();
+        else
+            Console.WriteLine("Empresa não encontrada.");
+    }
+
+    static async Task AlterarCompany()
+    {
+        Console.Write("ID da Empresa a alterar: ");
+        int id = int.Parse(Console.ReadLine());
+        Company c = new Company();
+        await c.BuscaAsync(id);
+        if (c.id == 0)
+        {
+            Console.WriteLine("Empresa não encontrada.");
+            return;
+        }
+
+        Console.WriteLine($"Nome atual: {c.name}");
+        Console.Write("Novo Nome (ou enter para manter): ");
+        string name = Console.ReadLine();
+        if (!string.IsNullOrEmpty(name)) c.name = name;
+
+        Console.WriteLine($"CNPJ atual: {c.cnpj}");
+        Console.Write("Novo CNPJ (ou enter para manter): ");
+        string cnpj = Console.ReadLine();
+        if (!string.IsNullOrEmpty(cnpj)) c.cnpj = cnpj;
+
+        await c.AlterarAsync();
+        Console.WriteLine("Empresa alterada com sucesso!");
+    }
+
+    static async Task RemoverCompany()
+    {
+        Console.Write("ID da Empresa a remover: ");
+        int id = int.Parse(Console.ReadLine());
+        Company c = new Company();
+        c.id = id;
+        await c.RemoverAsync();
+        Console.WriteLine("Empresa removida com sucesso!");
     }
 }
