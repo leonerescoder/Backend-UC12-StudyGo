@@ -41,7 +41,7 @@ public class Company
 
     public void Mostrar()
     {
-        string ownerName = owner != null && owner.id != 0 ? owner.id.ToString() : "N/A";
+        string ownerName = owner != null && owner.Id != 0 ? owner.Id.ToString() : "N/A";
         Console.WriteLine($"| {id,-5} | {name,-20} | {cnpj,-18} | {foundation.ToString("dd/MM/yyyy"),-12} | {ranking,-7} | {ownerName,-10} |");
     }
 
@@ -75,10 +75,10 @@ public class Company
         comando.Parameters.AddWithValue("methods", methods);
         comando.Parameters.AddWithValue("ranking", ranking);
         
-        if (owner == null || owner.id == 0)
+        if (owner == null || owner.Id == 0)
             comando.Parameters.AddWithValue("owner_id", DBNull.Value);
         else
-            comando.Parameters.AddWithValue("owner_id", owner.id);
+            comando.Parameters.AddWithValue("owner_id", owner.Id);
 
         comando.Parameters.AddWithValue("createdAt", DateTime.Now);
         comando.Parameters.AddWithValue("updatedAt", DateTime.Now);
@@ -185,10 +185,10 @@ public class Company
         comando.Parameters.AddWithValue("methods", methods);
         comando.Parameters.AddWithValue("ranking", ranking);
         
-        if (owner == null || owner.id == 0)
+        if (owner == null || owner.Id == 0)
             comando.Parameters.AddWithValue("owner_id", DBNull.Value);
         else
-            comando.Parameters.AddWithValue("owner_id", owner.id);
+            comando.Parameters.AddWithValue("owner_id", owner.Id);
 
         comando.Parameters.AddWithValue("updatedAt", DateTime.Now);
 
