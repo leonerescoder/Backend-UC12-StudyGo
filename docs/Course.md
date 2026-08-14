@@ -1,6 +1,12 @@
 ### Curso:
 
-Analise meu schema do projeto
+Analise meu schema do projeto e o contexto.md
+
+
+### Codigo: C#
+
+Faça como o 'exemplo.cs' e implemente para o meu projeto
+
 
 ### Schema do Projeto:
 

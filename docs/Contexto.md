@@ -1,5 +1,8 @@
 # Contexto
-...
+ Faça uma leitura de toda documentação para entender o projeto, vamos ter que aplicar as seguintes informações contidas neste md
+ Confirme antes de implementar qualquer coisa,realizar um implemation plan 
+ 
+  
 
 ## Integrantes do grupo
 - Leonardo
