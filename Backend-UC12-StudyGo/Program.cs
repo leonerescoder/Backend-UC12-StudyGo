@@ -11,6 +11,7 @@ class Program
             Console.WriteLine("1. Gerenciar Cursos");
             Console.WriteLine("2. Gerenciar Categorias");
             Console.WriteLine("3. Gerenciar Empresas");
+            Console.WriteLine("4. Gerenciar Usuários");
             Console.WriteLine("0. Sair");
             Console.Write("Escolha uma opção: ");
             
@@ -28,6 +29,9 @@ class Program
                     break;
                 case "3":
                     await MenuCompany();
+                    break;
+                case "4":
+                    await MenuUser();
                     break;
                 default:
                     Console.WriteLine("Opção inválida!");
@@ -119,6 +123,54 @@ class Program
                         break;
                     case "5":
                         await RemoverCategoria();
+                        break;
+                    default:
+                        Console.WriteLine("Opção inválida!");
+                        break;
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Erro: {ex.Message}");
+            }
+        }
+    }
+
+    static async Task MenuUser()
+    {
+        while (true)
+        {
+            Console.WriteLine("\n--- MENU USUÁRIO ---");
+            Console.WriteLine("1. Inserir");
+            Console.WriteLine("2. Consultar todos");
+            Console.WriteLine("3. Consultar específico");
+            Console.WriteLine("4. Alterar");
+            Console.WriteLine("5. Remover");
+            Console.WriteLine("0. Voltar");
+            Console.Write("Escolha uma opção: ");
+
+            var option = Console.ReadLine();
+
+            if (option == "0") break;
+
+            try
+            {
+                switch (option)
+                {
+                    case "1":
+                        InserirUsuario();
+                        break;
+                    case "2":
+                        ConsultarTodosUsuarios();
+                        break;
+                    case "3":
+                        ConsultarUsuarioEspecifico();
+                        break;
+                    case "4":
+                        AlterarUsuario();
+                        break;
+                    case "5":
+                        RemoverUsuario();
                         break;
                     default:
                         Console.WriteLine("Opção inválida!");
@@ -411,5 +463,164 @@ class Program
         c.id = id;
         await c.RemoverAsync();
         Console.WriteLine("Empresa removida com sucesso!");
+    }
+
+    // --- Métodos User ---
+    static void InserirUsuario()
+    {
+        Console.Write("Nome: ");
+        string name = Console.ReadLine();
+
+        Console.Write("CPF: ");
+        string cpf = Console.ReadLine();
+
+        Console.Write("E-mail: ");
+        string email = Console.ReadLine();
+
+        Console.Write("Senha: ");
+        string password = Console.ReadLine();
+
+        Console.Write("Tipo (ADMIN/DIRECTOR): ");
+        string tipoTexto = Console.ReadLine();
+        UserType? tipo = string.IsNullOrWhiteSpace(tipoTexto)
+            ? null
+            : Enum.Parse<UserType>(tipoTexto.Trim(), true);
+
+        Console.Write("Status (ATIVO/INATIVO): ");
+        string statusTexto = Console.ReadLine();
+        UserStatus? status = string.IsNullOrWhiteSpace(statusTexto)
+            ? null
+            : Enum.Parse<UserStatus>(statusTexto.Trim(), true);
+
+        Console.Write("Data de Nascimento (yyyy-MM-dd, vazio para nulo): ");
+        string birthText = Console.ReadLine();
+        DateTime? birthDate = string.IsNullOrWhiteSpace(birthText)
+            ? null
+            : DateTime.ParseExact(birthText.Trim(), "yyyy-MM-dd", System.Globalization.CultureInfo.InvariantCulture);
+
+        Console.Write("Company ID (vazio para nulo): ");
+        string companyText = Console.ReadLine();
+        int? companyId = string.IsNullOrWhiteSpace(companyText)
+            ? null
+            : int.Parse(companyText);
+
+        User usuario = new User(name, cpf, email, password, tipo, status, birthDate, companyId);
+        usuario.Salvar();
+
+        Console.WriteLine("Usuário inserido com sucesso!");
+    }
+
+    static void ConsultarTodosUsuarios()
+    {
+        var usuarios = User.ListarTodos();
+
+        if (usuarios.Count == 0)
+        {
+            Console.WriteLine("Nenhum usuário cadastrado.");
+            return;
+        }
+
+        foreach (var usuario in usuarios)
+        {
+            Console.WriteLine();
+            usuario.Mostrar();
+            Console.WriteLine("--------------------------------------------");
+        }
+    }
+
+    static void ConsultarUsuarioEspecifico()
+    {
+        Console.Write("ID do Usuário: ");
+        int id = int.Parse(Console.ReadLine());
+
+        User usuario = User.BuscarPorId(id);
+        if (usuario == null)
+        {
+            Console.WriteLine("Usuário não encontrado.");
+            return;
+        }
+
+        usuario.Mostrar();
+    }
+
+    static void AlterarUsuario()
+    {
+        Console.Write("ID do Usuário a alterar: ");
+        int id = int.Parse(Console.ReadLine());
+
+        User usuario = User.BuscarPorId(id);
+        if (usuario == null)
+        {
+            Console.WriteLine("Usuário não encontrado.");
+            return;
+        }
+
+        Console.WriteLine($"Nome atual: {usuario.Name}");
+        Console.Write("Novo Nome (ou enter para manter): ");
+        string nome = Console.ReadLine();
+
+        Console.WriteLine($"E-mail atual: {usuario.Email}");
+        Console.Write("Novo E-mail (ou enter para manter): ");
+        string email = Console.ReadLine();
+
+        Console.WriteLine("Senha atual: ********");
+        Console.Write("Nova Senha (ou enter para manter): ");
+        string senha = Console.ReadLine();
+
+        Console.WriteLine($"Tipo atual: {usuario.Type}");
+        Console.Write("Novo Tipo (ADMIN/DIRECTOR, ou enter para manter): ");
+        string tipoTexto = Console.ReadLine();
+        UserType? tipo = string.IsNullOrWhiteSpace(tipoTexto)
+            ? null
+            : Enum.Parse<UserType>(tipoTexto.Trim(), true);
+
+        Console.WriteLine($"Status atual: {usuario.Status}");
+        Console.Write("Novo Status (ATIVO/INATIVO, ou enter para manter): ");
+        string statusTexto = Console.ReadLine();
+        UserStatus? status = string.IsNullOrWhiteSpace(statusTexto)
+            ? null
+            : Enum.Parse<UserStatus>(statusTexto.Trim(), true);
+
+        Console.WriteLine($"Data de nascimento atual: {usuario.BirthDate?.ToString("yyyy-MM-dd") ?? "N/A"}");
+        Console.Write("Nova Data de Nascimento (yyyy-MM-dd, ou enter para manter): ");
+        string birthText = Console.ReadLine();
+        DateTime? birthDate = string.IsNullOrWhiteSpace(birthText)
+            ? null
+            : DateTime.ParseExact(birthText.Trim(), "yyyy-MM-dd", System.Globalization.CultureInfo.InvariantCulture);
+
+        Console.WriteLine($"Company ID atual: {usuario.CompanyId ?? 0}");
+        Console.Write("Novo Company ID (ou enter para manter): ");
+        string companyText = Console.ReadLine();
+        int? companyId = string.IsNullOrWhiteSpace(companyText)
+            ? null
+            : int.Parse(companyText);
+
+        usuario.Atualizar(
+            string.IsNullOrWhiteSpace(nome) ? null : nome,
+            string.IsNullOrWhiteSpace(email) ? null : email,
+            string.IsNullOrWhiteSpace(senha) ? null : senha,
+            tipo,
+            status,
+            birthDate,
+            companyId
+        );
+
+        Console.WriteLine("Usuário alterado com sucesso!");
+    }
+
+    static void RemoverUsuario()
+    {
+        Console.Write("ID do Usuário a remover: ");
+        int id = int.Parse(Console.ReadLine());
+
+        User usuario = User.BuscarPorId(id);
+        if (usuario == null)
+        {
+            Console.WriteLine("Usuário não encontrado.");
+            return;
+        }
+
+        usuario.Deletar();
+        Console.WriteLine("Usuário removido com sucesso!");
     }
 }

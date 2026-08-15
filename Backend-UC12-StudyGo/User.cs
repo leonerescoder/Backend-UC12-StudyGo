@@ -310,6 +310,16 @@ public class User
 
     public void Salvar()
     {
+        // Validar dados antes de salvar
+        ValidarDados(
+            Name,
+            Cpf,
+            Email,
+            Password,
+            BirthDate,
+            CompanyId
+        );
+
         using MySqlConnection conexao =
             new MySqlConnection(
                 ConfiguracaoBD.connectionString
