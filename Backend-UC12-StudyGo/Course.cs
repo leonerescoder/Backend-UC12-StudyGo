@@ -72,7 +72,11 @@ public class Course
         comando.Parameters.AddWithValue("workload", workload.HasValue ? (object)workload.Value : DBNull.Value);
         comando.Parameters.AddWithValue("ranking", ranking);
         comando.Parameters.AddWithValue("field_of_study", Field_of_study);
-        comando.Parameters.AddWithValue("company_id", company.id);
+        
+        if (company == null || company.id == 0)
+            comando.Parameters.AddWithValue("company_id", DBNull.Value);
+        else
+            comando.Parameters.AddWithValue("company_id", company.id);
         
         // Se o owner_id for nulo ou 0, salva null
         if (owner == null || owner.id == 0)
@@ -105,14 +109,21 @@ public class Course
             this.name = dados.GetString("name");
             this.description = dados.GetString("description");
             this.url_img = dados.GetString("url_img");
-            this.workload = dados.IsDBNull("workload") ? null : dados.GetFloat("workload");
+            this.workload = dados.IsDBNull(dados.GetOrdinal("workload")) ? null : dados.GetFloat("workload");
             this.ranking = dados.GetInt32("ranking");
             this.Field_of_study = dados.GetString("Field_of_study");
             
-            int company_id = dados.GetInt32("company_id");
-            this.company = new Company(company_id);
+            if (!dados.IsDBNull(dados.GetOrdinal("company_id")))
+            {
+                int company_id = dados.GetInt32("company_id");
+                this.company = new Company(company_id);
+            }
+            else
+            {
+                this.company = null;
+            }
 
-            if (!dados.IsDBNull("owner_id"))
+            if (!dados.IsDBNull(dados.GetOrdinal("owner_id")))
             {
                 int owner_id = dados.GetInt32("owner_id");
                 this.owner = new User(owner_id);
@@ -144,14 +155,21 @@ public class Course
             c.name = dados.GetString("name");
             c.description = dados.GetString("description");
             c.url_img = dados.GetString("url_img");
-            c.workload = dados.IsDBNull("workload") ? null : dados.GetFloat("workload");
+            c.workload = dados.IsDBNull(dados.GetOrdinal("workload")) ? null : dados.GetFloat("workload");
             c.ranking = dados.GetInt32("ranking");
             c.Field_of_study = dados.GetString("Field_of_study");
             
-            int company_id = dados.GetInt32("company_id");
-            c.company = new Company(company_id);
+            if (!dados.IsDBNull(dados.GetOrdinal("company_id")))
+            {
+                int company_id = dados.GetInt32("company_id");
+                c.company = new Company(company_id);
+            }
+            else
+            {
+                c.company = null;
+            }
 
-            if (!dados.IsDBNull("owner_id"))
+            if (!dados.IsDBNull(dados.GetOrdinal("owner_id")))
             {
                 int owner_id = dados.GetInt32("owner_id");
                 c.owner = new User(owner_id);
@@ -187,7 +205,11 @@ public class Course
         comando.Parameters.AddWithValue("workload", workload.HasValue ? (object)workload.Value : DBNull.Value);
         comando.Parameters.AddWithValue("ranking", ranking);
         comando.Parameters.AddWithValue("field_of_study", Field_of_study);
-        comando.Parameters.AddWithValue("company_id", company.id);
+        
+        if (company == null || company.id == 0)
+            comando.Parameters.AddWithValue("company_id", DBNull.Value);
+        else
+            comando.Parameters.AddWithValue("company_id", company.id);
         
         if (owner == null || owner.id == 0)
             comando.Parameters.AddWithValue("owner_id", DBNull.Value);

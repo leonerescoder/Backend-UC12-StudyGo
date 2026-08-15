@@ -71,13 +71,14 @@ public class Category
     {
         string query = $"""
            SELECT * FROM {tabela} 
-           WHERE id = {id}
+           WHERE id = @id
            """;
         using var conexao = new MySqlConnection(ConfiguracaoBD.connectionString);
         using var comando = new MySqlCommand(query, conexao);
+        comando.Parameters.AddWithValue("id", id);
 
         await conexao.OpenAsync();
-        var dados = await comando.ExecuteReaderAsync();
+        using var dados = await comando.ExecuteReaderAsync();
 
         if (await dados.ReadAsync())
         {
@@ -98,7 +99,7 @@ public class Category
         using var comando = new MySqlCommand(query, conexao);
 
         await conexao.OpenAsync();
-        var dados = await comando.ExecuteReaderAsync();
+        using var dados = await comando.ExecuteReaderAsync();
 
         List<Category> categories = new();
         while (await dados.ReadAsync())
@@ -137,10 +138,11 @@ public class Category
     {
         string query = $"""
            DELETE FROM {tabela}
-           WHERE id = {id}
+           WHERE id = @id
            """;
         using var conexao = new MySqlConnection(ConfiguracaoBD.connectionString);
         using var comando = new MySqlCommand(query, conexao);
+        comando.Parameters.AddWithValue("id", id);
 
         await conexao.OpenAsync();
         await comando.ExecuteNonQueryAsync();
