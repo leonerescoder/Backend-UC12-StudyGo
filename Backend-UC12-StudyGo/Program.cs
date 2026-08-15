@@ -90,9 +90,11 @@ class Program
             Console.WriteLine("3. Consultar específico");
             Console.WriteLine("4. Alterar");
             Console.WriteLine("5. Remover");
+            Console.WriteLine("6. Vincular Curso");
+            Console.WriteLine("7. Desvincular Curso");
+            Console.WriteLine("8. Listar Cursos da Categoria");
             Console.WriteLine("0. Voltar");
             Console.Write("Escolha uma opção: ");
-            
             var option = Console.ReadLine();
 
             if (option == "0") break;
@@ -115,6 +117,15 @@ class Program
                         break;
                     case "5":
                         await RemoverCategoria();
+                        break;
+                    case "6":
+                        await VincularCursoACategoria();
+                        break;
+                    case "7":
+                        await DesvincularCursoDeCategoria();
+                        break;
+                    case "8":
+                        await ListarCursosDaCategoria();
                         break;
                     default:
                         Console.WriteLine("Opção inválida!");
@@ -278,5 +289,47 @@ class Program
         c.id = id;
         await c.RemoverAsync();
         Console.WriteLine("Categoria removida com sucesso!");
+    }
+
+    static async Task VincularCursoACategoria()
+    {
+        Console.Write("ID da Categoria: ");
+        int catId = int.Parse(Console.ReadLine());
+        Console.Write("ID do Curso: ");
+        int cursoId = int.Parse(Console.ReadLine());
+        
+        Category c = new Category { id = catId };
+        await c.VincularCursoAsync(cursoId);
+        Console.WriteLine("Curso vinculado com sucesso!");
+    }
+
+    static async Task DesvincularCursoDeCategoria()
+    {
+        Console.Write("ID da Categoria: ");
+        int catId = int.Parse(Console.ReadLine());
+        Console.Write("ID do Curso: ");
+        int cursoId = int.Parse(Console.ReadLine());
+        
+        Category c = new Category { id = catId };
+        await c.DesvincularCursoAsync(cursoId);
+        Console.WriteLine("Curso desvinculado com sucesso!");
+    }
+
+    static async Task ListarCursosDaCategoria()
+    {
+        Console.Write("ID da Categoria: ");
+        int catId = int.Parse(Console.ReadLine());
+        
+        Category c = new Category { id = catId };
+        await c.CarregarCursosAsync();
+        
+        if (c.courses.Count > 0)
+        {
+            Course.Mostrar(c.courses);
+        }
+        else
+        {
+            Console.WriteLine("Nenhum curso encontrado para esta categoria.");
+        }
     }
 }

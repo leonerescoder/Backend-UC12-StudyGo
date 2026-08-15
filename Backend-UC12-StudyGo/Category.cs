@@ -12,6 +12,8 @@ public class Category
     public DateTime createdAt { get; set; }
     public DateTime updatedAt { get; set; }
 
+    public List<Course> courses { get; set; } = new List<Course>();
+
     public const string tabela = "categories";
 
     public Category() { }
@@ -142,5 +144,61 @@ public class Category
 
         await conexao.OpenAsync();
         await comando.ExecuteNonQueryAsync();
+    }
+
+    public async Task VincularCursoAsync(int courseId)
+    {
+        string query = $"""
+            INSERT INTO category_course (category_id, course_id)
+            VALUES (@categoryId, @courseId);
+            """;
+        using var conexao = new MySqlConnection(ConfiguracaoBD.connectionString);
+        using var comando = new MySqlCommand(query, conexao);
+        comando.Parameters.AddWithValue("categoryId", this.id);
+        comando.Parameters.AddWithValue("courseId", courseId);
+
+        await conexao.OpenAsync();
+        await comando.ExecuteNonQueryAsync();
+    }
+
+    public async Task DesvincularCursoAsync(int courseId)
+    {
+        string query = $"""
+            DELETE FROM category_course 
+            WHERE category_id = @categoryId AND course_id = @courseId;
+            """;
+        using var conexao = new MySqlConnection(ConfiguracaoBD.connectionString);
+        using var comando = new MySqlCommand(query, conexao);
+        comando.Parameters.AddWithValue("categoryId", this.id);
+        comando.Parameters.AddWithValue("courseId", courseId);
+
+        await conexao.OpenAsync();
+        await comando.ExecuteNonQueryAsync();
+    }
+
+    public async Task CarregarCursosAsync()
+    {
+        string query = $"""
+            SELECT c.* FROM courses c
+            INNER JOIN category_course cc ON c.id = cc.course_id
+            WHERE cc.category_id = @categoryId;
+            """;
+        using var conexao = new MySqlConnection(ConfiguracaoBD.connectionString);
+        using var comando = new MySqlCommand(query, conexao);
+        comando.Parameters.AddWithValue("categoryId", this.id);
+
+        await conexao.OpenAsync();
+        using var dados = await comando.ExecuteReaderAsync();
+
+        this.courses.Clear();
+        while (await dados.ReadAsync())
+        {
+            Course course = new Course();
+            course.id = dados.GetInt32("id");
+            course.name = dados.GetString("name");
+            course.description = dados.GetString("description");
+            course.url_img = dados.GetString("url_img");
+            this.courses.Add(course);
+        }
     }
 }
