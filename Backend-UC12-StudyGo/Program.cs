@@ -1,6 +1,7 @@
 using System;
 using System.Threading.Tasks;
 
+Console.WriteLine("Criando um api");
 class Program
 {
     static async Task Main(string[] args)
