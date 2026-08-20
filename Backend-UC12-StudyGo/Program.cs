@@ -1,3 +1,5 @@
+Console.WriteLine("Criando uma API do zero!");
+
 using System;
 using System.Threading.Tasks;
 
