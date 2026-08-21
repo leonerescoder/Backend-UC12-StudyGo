@@ -903,7 +903,7 @@ public class User
     // LISTAR TODOS
     // ============================================================
 
-    public static List<User> ListarTodos()
+    public static async Task <List<User>> ListarTodos()
     {
         List<User> usuarios =
             new List<User>();

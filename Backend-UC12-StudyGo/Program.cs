@@ -1,11 +1,12 @@
 using System;
 using System.Threading.Tasks;
 
-Console.WriteLine("Criando um api");
 class Program
 {
     static async Task Main(string[] args)
     {
+        API api = new API();
+        await api.Iniciar();
         while (true)
         {
             Console.WriteLine("\n--- MENU PRINCIPAL ---");
