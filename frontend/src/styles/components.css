@@ -1,0 +1,673 @@
+/* ==========================================================================
+   Navbar Mestre (Fiel ao navbar_mestre.png - Sem espaço vazio no topo)
+   ========================================================================== */
+.navbar-mestre-wrapper {
+  position: sticky;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background: var(--navbar-bg);
+  border-bottom: 2px solid #2563eb;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.25);
+  z-index: 1000;
+}
+
+.navbar-mestre-container {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  height: 68px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 1.5rem;
+  gap: 1.5rem;
+}
+
+/* Lado Esquerdo */
+.nav-left-group {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+}
+
+.nav-hamburger-btn {
+  color: var(--navbar-text);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.4rem;
+  border-radius: var(--radius-sm);
+  transition: all var(--transition-fast);
+}
+
+.nav-hamburger-btn:hover {
+  background: rgba(37, 99, 235, 0.08);
+  color: var(--navbar-accent);
+}
+
+.nav-mestre-brand {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  text-decoration: none;
+}
+
+.nav-mestre-icon-box {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.nav-mestre-title {
+  font-family: 'Outfit', sans-serif;
+  font-size: 1.45rem;
+  font-weight: 700;
+  color: #1d4ed8;
+  letter-spacing: -0.02em;
+}
+
+/* Centro: Barra de Busca Pílula */
+.nav-mestre-search {
+  flex: 1;
+  max-width: 460px;
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.nav-mestre-search-input {
+  width: 100%;
+  height: 40px;
+  background: #f0f7ff;
+  border: 1.5px solid var(--navbar-search-border);
+  border-radius: var(--radius-full);
+  padding: 0 1.25rem 0 2.6rem;
+  font-size: 0.9rem;
+  color: var(--navbar-text);
+  transition: all var(--transition-fast);
+}
+
+.nav-mestre-search-input::placeholder {
+  color: var(--navbar-text-muted);
+}
+
+.nav-mestre-search-input:focus {
+  background: #ffffff;
+  border-color: var(--navbar-accent);
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
+}
+
+.nav-mestre-search-icon {
+  position: absolute;
+  left: 0.85rem;
+  color: #2563eb;
+  pointer-events: none;
+}
+
+/* Lado Direito: Links */
+.nav-mestre-links {
+  display: flex;
+  align-items: center;
+  gap: 1.75rem;
+}
+
+.nav-mestre-link {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--navbar-text);
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0.35rem 0.15rem;
+  position: relative;
+  transition: color var(--transition-fast);
+}
+
+.nav-mestre-link:hover {
+  color: var(--navbar-accent);
+}
+
+.nav-mestre-link.active {
+  color: var(--navbar-accent);
+}
+
+
+/* ==========================================================================
+   Hero Section (Compacto, colado logo abaixo da navbar)
+   ========================================================================== */
+.hero-section {
+  position: relative;
+  padding: 1.25rem 0 1.5rem;
+  text-align: center;
+  background: radial-gradient(ellipse at 50% 0%, #101c36 0%, #070d19 80%);
+}
+
+.hero-content {
+  position: relative;
+  z-index: 1;
+  max-width: 840px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Hero Badge */
+.hero-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.35rem 0.95rem;
+  background: #101c36;
+  color: #38bdf8;
+  border: 1px solid var(--bg-card-border);
+  border-radius: var(--radius-full);
+  font-size: 0.85rem;
+  font-weight: 600;
+  margin-bottom: 0.85rem;
+}
+
+/* Hero Headline */
+.hero-headline {
+  font-size: clamp(2rem, 3.8vw, 3rem);
+  font-weight: 800;
+  color: var(--text-primary);
+  margin-bottom: 0.65rem;
+  letter-spacing: -0.025em;
+  line-height: 1.18;
+}
+
+.hero-headline .highlight {
+  color: #38bdf8;
+  display: inline-block;
+}
+
+/* Hero Subtitle */
+.hero-subtitle {
+  font-size: clamp(0.95rem, 1.6vw, 1.1rem);
+  color: var(--text-secondary);
+  margin-bottom: 1.35rem;
+  font-weight: 400;
+  max-width: 580px;
+}
+
+/* Hero Search Bar */
+.hero-search-wrapper {
+  width: 100%;
+  max-width: 640px;
+  position: relative;
+}
+
+.hero-search-form {
+  position: relative;
+  display: flex;
+  align-items: center;
+  background: #101c36;
+  border: 1.5px solid var(--bg-card-border);
+  border-radius: var(--radius-full);
+  padding: 0.35rem 0.35rem 0.35rem 1.25rem;
+  box-shadow: 0 8px 20px -3px rgba(0, 0, 0, 0.5);
+  transition: all var(--transition-normal);
+}
+
+.hero-search-form:focus-within {
+  border-color: var(--accent-blue);
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.2);
+}
+
+.hero-search-icon {
+  width: 20px;
+  height: 20px;
+  color: #38bdf8;
+  margin-right: 0.65rem;
+  flex-shrink: 0;
+}
+
+.hero-search-input {
+  flex: 1;
+  background: transparent;
+  color: var(--text-primary);
+  font-size: 0.95rem;
+  padding: 0.35rem 0;
+}
+
+.hero-search-input::placeholder {
+  color: #64748b;
+}
+
+.hero-search-btn {
+  background: #2563eb;
+  color: #ffffff;
+  padding: 0.7rem 1.35rem;
+  border-radius: var(--radius-full);
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
+  transition: all var(--transition-normal);
+}
+
+.hero-search-btn:hover {
+  background: #1d4ed8;
+}
+
+
+/* ==========================================================================
+   Feature / Stat Cards (Fiel ao layout_mestre.png)
+   ========================================================================== */
+.features-section {
+  padding: 1.5rem 0 2.5rem;
+}
+
+.features-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.25rem;
+}
+
+.feature-card {
+  background: var(--bg-card);
+  border: 1px solid var(--bg-card-border);
+  border-radius: var(--radius-lg);
+  padding: 1.25rem 1.15rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  transition: all var(--transition-normal);
+  cursor: pointer;
+  text-align: left;
+}
+
+.feature-card:hover {
+  transform: translateY(-2px);
+  background: var(--bg-card-hover);
+  border-color: var(--accent-blue);
+}
+
+.feature-icon-wrapper {
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  background: #0d172e;
+  border: 1px solid var(--bg-card-border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #38bdf8;
+  flex-shrink: 0;
+  transition: all var(--transition-normal);
+}
+
+.feature-card:hover .feature-icon-wrapper {
+  color: #ffffff;
+  background: #2563eb;
+  border-color: #2563eb;
+}
+
+.feature-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.feature-tag {
+  font-size: 0.725rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: #94a3b8;
+  font-weight: 500;
+}
+
+.feature-title {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  line-height: 1.25;
+}
+
+
+/* ==========================================================================
+   Seção Cursos em Destaque (Cores do layout_mestre.png)
+   ========================================================================== */
+.courses-section {
+  padding: 2rem 0 4.5rem;
+}
+
+.section-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1.5rem;
+}
+
+.section-title-group {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.section-indicator {
+  width: 4px;
+  height: 22px;
+  background: #2563eb;
+  border-radius: var(--radius-full);
+}
+
+.section-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #ffffff;
+}
+
+.view-all-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  color: #38bdf8;
+  font-weight: 600;
+  font-size: 0.9rem;
+  padding: 0.35rem 0.75rem;
+  border-radius: var(--radius-sm);
+  background: #101c36;
+  border: 1px solid var(--bg-card-border);
+  transition: all var(--transition-normal);
+  cursor: pointer;
+}
+
+.view-all-link:hover {
+  background: #152445;
+  border-color: #2563eb;
+  color: #ffffff;
+}
+
+/* Category Filter Tabs */
+.filter-tabs {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  margin-bottom: 1.75rem;
+  overflow-x: auto;
+  padding-bottom: 0.4rem;
+}
+
+.filter-tab {
+  padding: 0.45rem 1rem;
+  border-radius: var(--radius-full);
+  font-size: 0.85rem;
+  font-weight: 500;
+  background: #101c36;
+  border: 1px solid var(--bg-card-border);
+  color: var(--text-secondary);
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all var(--transition-fast);
+}
+
+.filter-tab:hover {
+  background: #152445;
+  color: var(--text-primary);
+}
+
+.filter-tab.active {
+  background: #2563eb;
+  border-color: #2563eb;
+  color: #ffffff;
+  font-weight: 600;
+  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.4);
+}
+
+/* Grid de Cursos */
+.courses-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.25rem;
+}
+
+/* Course Card (Cores e layout fiel ao layout_mestre.png) */
+.course-card {
+  background: var(--bg-card);
+  border: 1px solid var(--bg-card-border);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  transition: all var(--transition-normal);
+  cursor: pointer;
+  position: relative;
+  text-align: left;
+}
+
+.course-card:hover {
+  transform: translateY(-4px);
+  background: var(--bg-card-hover);
+  border-color: #2563eb;
+  box-shadow: 0 12px 25px rgba(0, 0, 0, 0.5);
+}
+
+.course-banner {
+  height: 160px;
+  position: relative;
+  overflow: hidden;
+  background: #0a1324;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.course-banner-svg {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform var(--transition-normal);
+}
+
+.course-card:hover .course-banner-svg {
+  transform: scale(1.04);
+}
+
+/* Badges no estilo do layout_mestre.png */
+.card-badge-top {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  z-index: 2;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.3rem 0.75rem;
+  border-radius: var(--radius-full);
+  font-size: 0.725rem;
+  font-weight: 700;
+}
+
+.card-badge-top.popular {
+  background: #ffffff;
+  color: #0f172a;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+.card-badge-top.featured {
+  background: #15223e;
+  color: #f59e0b;
+  border: 1px solid #233866;
+}
+
+.course-body {
+  padding: 1.2rem;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.course-category {
+  font-size: 0.725rem;
+  font-weight: 600;
+  color: #94a3b8;
+  margin-bottom: 0.4rem;
+}
+
+.course-title {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 0.65rem;
+  line-height: 1.3;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.course-card:hover .course-title {
+  color: #38bdf8;
+}
+
+.course-details {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: auto;
+  padding-top: 0.85rem;
+  border-top: 1px solid var(--bg-card-border);
+  font-size: 0.825rem;
+  color: var(--text-secondary);
+}
+
+.course-workload {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-weight: 500;
+}
+
+.course-school {
+  font-size: 0.775rem;
+  color: var(--text-muted);
+  max-width: 110px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.no-results {
+  grid-column: 1 / -1;
+  text-align: center;
+  padding: 3.5rem 1rem;
+  background: var(--bg-card);
+  border: 1px dashed var(--bg-card-border);
+  border-radius: var(--radius-lg);
+}
+
+.no-results-icon {
+  margin-bottom: 0.75rem;
+  display: flex;
+  justify-content: center;
+}
+
+
+/* ==========================================================================
+   Footer
+   ========================================================================== */
+.footer {
+  border-top: 1px solid var(--bg-card-border);
+  background: #050a14;
+  padding: 3rem 0 1.75rem;
+  margin-top: auto;
+}
+
+.footer-container {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 0 1.5rem;
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1.5fr;
+  gap: 2.5rem;
+}
+
+.footer-brand p {
+  color: var(--text-secondary);
+  font-size: 0.875rem;
+  margin-top: 0.75rem;
+  max-width: 320px;
+}
+
+.footer-col h4 {
+  color: var(--text-primary);
+  font-size: 0.95rem;
+  font-weight: 600;
+  margin-bottom: 0.85rem;
+}
+
+.footer-links {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.footer-links a, .footer-links button {
+  color: var(--text-secondary);
+  font-size: 0.85rem;
+  text-align: left;
+  transition: color var(--transition-fast);
+}
+
+.footer-links a:hover, .footer-links button:hover {
+  color: #38bdf8;
+}
+
+.footer-bottom {
+  max-width: var(--max-width);
+  margin: 2rem auto 0;
+  padding: 1.25rem 1.5rem 0;
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 0.8rem;
+  color: var(--text-muted);
+}
+
+/* Responsive */
+@media (max-width: 1080px) {
+  .features-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .courses-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .footer-container {
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .navbar-mestre-container {
+    padding: 0 1rem;
+    height: 60px;
+  }
+  .nav-mestre-search {
+    display: none;
+  }
+  .nav-mestre-links {
+    display: none;
+  }
+  .features-grid {
+    grid-template-columns: 1fr;
+  }
+  .courses-grid {
+    grid-template-columns: 1fr;
+  }
+  .hero-section {
+    padding: 2rem 0 1.5rem;
+  }
+  .footer-container {
+    grid-template-columns: 1fr;
+  }
+  .footer-bottom {
+    flex-direction: column;
+    gap: 0.75rem;
+    text-align: center;
+  }
+}
